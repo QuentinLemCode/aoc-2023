@@ -21,4 +21,21 @@ def part1(input)
     .inject(:+)
 end
 
+def part2(input)
+  cards = input.split("\n")
+  copies = cards.each_with_index.to_h {|i,j| [j, 1]}
+  cards
+    .map.with_index do |card, index|
+      wins = card.split(':')[1].split('|')[0].split(' ').map(&:to_i)
+      have = card.split(':')[1].split('|')[1].split(' ').map(&:to_i)
+      wons = wins & have
+      for i in index+1..index+(wons.length)
+        copies[i] += (1*copies[index])
+      end
+      copies[index]
+    end
+    .inject(:+)
+end
+
 puts part1(input)
+puts part2(input)
