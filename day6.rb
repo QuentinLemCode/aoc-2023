@@ -22,10 +22,6 @@ def part1(input)
   return beats.inject(:*)
 end
 
-def race(input, time)
-  (time - input) * input
-end
-
 def part2(input)
   time, max_distance =
     input.split("\n").map { |line| line.split[1..-1].join('').to_i }
