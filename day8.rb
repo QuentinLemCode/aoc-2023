@@ -29,11 +29,8 @@ def part1(input)
   while !found
     instructions.each do |instruction|
       steps += 1
-      if instruction == 'R'
-        position = maps[position][1]
-      elsif instruction == 'L'
-        position = maps[position][0]
-      end
+      direction = instruction == 'R' ? 1 : 0
+      position = maps[position][direction]
       if position == 'ZZZ'
         found = true
         break
