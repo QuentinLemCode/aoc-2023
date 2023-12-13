@@ -34,8 +34,28 @@ def find_reflection(pattern)
   nil
 end
 
-def part2(input)
+def find_reflection_smudge(pattern)
+  for i in 0..pattern.length-2
+    smudges = 0
+    next unless (0..i).all? do |j|
+      break(true) if i+j+1 >= pattern.length || i-j < 0
+      a = pattern[i-j]
+      b = pattern[i+j+1]
+      next(true) if a == b
+      smudges += a.chars.zip(b.chars).filter { |x, y| x != y }.length
+      next(false) if smudges > 1
+      true
+    end
+    next if smudges != 1
+    return i+1 # 1 indexed
+  end
+  nil
+end
 
+def part2(input)
+  patterns = input.split("\n\n").map { |p| p.split("\n") }
+  patterns.map { |p| (find_reflection_smudge(p)&.send(:*, 100)) || find_reflection_smudge(p.map(&:chars).transpose.map(&:join))}.sum
 end
 
 puts part1(input)
+puts part2(input)
